@@ -8,7 +8,6 @@ SRCS    = 	src/main.cpp \
 			src/entity/Entity.cpp	\
 			src/world/World.cpp
 
-# 1. ИСПРАВЛЕНО: заменяем .cpp на .o
 OBJS    = $(patsubst src/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 
 CC = g++

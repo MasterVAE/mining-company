@@ -17,3 +17,16 @@ std::vector<Entity> World::GetEntities()
 {
     return entities_;
 }
+
+void World::Start()
+{
+    // TODO
+}
+
+void World::Update()
+{
+    for(auto& entity : entities_)
+    {
+        entity.Update();
+    }
+}

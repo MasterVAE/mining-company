@@ -13,6 +13,8 @@ public:
     World();
     ~World();
 
+    void Start();
+    void Update();
     std::vector<Entity> GetEntities();
 };
 
