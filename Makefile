@@ -6,14 +6,17 @@ TARGET  = target
 BUILD_DIR = build
 SRCS    = 	src/main.cpp \
 			src/entity/Entity.cpp	\
-			src/world/World.cpp
+			src/world/World.cpp	\
 
 OBJS    = $(patsubst src/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 
 CC = g++
-DEBUG_FLAGS = -D _DEBUG \
-				-ggdb3 \
-				-fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
+
+RAYLIB_FLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+
+DEBUG_FLAGS = -D_DEBUG \
+			-ggdb3 \
+			-fsanitize=address,alignment,bool,bounds,enum,float-cast-overflow,float-divide-by-zero,integer-divide-by-zero,leak,nonnull-attribute,null,object-size,return,returns-nonnull-attribute,shift,signed-integer-overflow,undefined,unreachable,vla-bound,vptr
 
 CFLAGS = -std=c++17 -Wall \
 		-Wextra \
@@ -84,22 +87,17 @@ else
     CFLAGS += $(RELEASE_FLAGS)
 endif
 
-
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	@$(CC) $(CFLAGS) -o $@ $(OBJS)
+	@$(CC) $(CFLAGS) -o $@ $(OBJS) $(RAYLIB_FLAGS)
 
-# 2. ИСПРАВЛЕНО: шаблон теперь для src/%.cpp
-# 3. ИСПРАВЛЕНО: mkdir теперь создает конкретную подпапку перед компиляцией объекта
 $(BUILD_DIR)/%.o: src/%.cpp
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 run: all
-	@./$(TARGET)
+	./$(TARGET)
 
 clean:
 	@rm -rf $(BUILD_DIR) $(TARGET)
-
-.PHONY: all run clean
