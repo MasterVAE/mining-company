@@ -3,6 +3,9 @@
 #include <iostream>
 
 #include "entity/Entity.hpp"
+#include "entity/Asteroid.hpp"
+#include "entity/Storage.hpp"
+#include "entity/Factory.hpp"
 
 Entity::Entity(EntityType type, std::string name, double x, double y, bool is_static)
 {
@@ -13,7 +16,24 @@ Entity::Entity(EntityType type, std::string name, double x, double y, bool is_st
     is_static_ = is_static;
 }
 
-Entity::~Entity() { }
+Entity::~Entity() 
+{
+    for(const auto& module : modules_)
+    {
+        switch(module->GetType())
+        {
+            case MDL_Asteroid:
+                delete (Asteroid*)module;
+                break;
+            case MDL_Factory:
+                delete (Factory*)module;
+                break;
+            case MDL_Storage:
+                delete (Storage*)module;
+                break;
+        }
+    }
+}
 
 const std::string& Entity::GetName() const
 {
@@ -56,7 +76,7 @@ void Entity::Update()
     }
 }
 
-const std::vector<std::unique_ptr<Module>>& Entity::GetModules() const
+const std::vector<Module*>& Entity::GetModules() const
 {
     return modules_;
 }
@@ -65,7 +85,7 @@ const Module* Entity::GetModule(ModuleType type) const
 {
     for(const auto& module : modules_)
     {
-        if(module->GetType() == type) return module.get();
+        if(module->GetType() == type) return module;
     }
 
     return nullptr;
@@ -74,18 +94,19 @@ const Module* Entity::GetModule(ModuleType type) const
 const std::vector<std::string> Entity::GetData() const
 {
     std::vector<std::string> data;
-         std::cout << "data asked" << modules_.size() << std::endl;
+         std::cout << "data asked " << modules_.size() << std::endl;
     for(const auto& module : modules_)
     {
         std::string module_data = module->GetData();
-        std::cout << "data getted" << module_data << std::endl;
+        std::cout << "data getted " << module_data << std::endl;
         if(module_data != "")  data.push_back(module_data);
     }
 
     return data;
 }
 
-void Entity::AddModule(std::unique_ptr<Module> module) 
+void Entity::AddModule(Module* module) 
 {
-    modules_.push_back(std::move(module)); 
+    modules_.push_back(module);
+    std::cout << "MODULE ADDED" << std::endl;
 }

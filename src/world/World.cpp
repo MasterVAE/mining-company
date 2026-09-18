@@ -11,10 +11,14 @@ World::World()
 
 World::~World()
 {
+    for(const auto& entity : entities_)
+    {
+        delete entity;
+    }
     entities_.clear();
 }
 
-std::vector<Entity>& World::GetEntities()
+std::vector<Entity*>& World::GetEntities()
 {
     return entities_;
 }
@@ -28,13 +32,13 @@ void World::Update()
 {
     for(auto& entity : entities_)
     {
-        entity.Update();
+        entity->Update();
     }
 }
 
-Entity& World::Spawn(Entity& entity)
+Entity* World::Spawn(Entity* entity)
 {
     entities_.push_back(entity);
-    std::cout << "Spawned: " << entity.GetName() << std::endl;
-    return *entities_.end();
+    std::cout << "Spawned: " << entity->GetName() << std::endl;
+    return entities_.back();
 }

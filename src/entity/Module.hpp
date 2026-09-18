@@ -32,7 +32,7 @@ public:
 
     virtual void Start() {};
     virtual void Update() {};
-    virtual const std::string GetData() const { return "bebra"; };
+    virtual const std::string GetData() const { return ""; };
 };
 
 #endif // MODULE_HPP

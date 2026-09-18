@@ -25,7 +25,7 @@ class Entity
     double y_;
     bool is_static_;
     EntityType type_;
-    std::vector<std::unique_ptr<Module>> modules_;
+    std::vector<Module*> modules_;
 
 public:
     Entity(EntityType, std::string, double, double, bool);
@@ -35,13 +35,13 @@ public:
     const double Y() const;
     bool is_static() const;
     EntityType GetType() const;
-    const std::vector<std::unique_ptr<Module>>& GetModules() const;
+    const std::vector<Module*>& GetModules() const;
     const Module* GetModule(ModuleType type) const;
     const std::vector<std::string> GetData() const;
     void Start();
     void Update();
 
-    void AddModule(std::unique_ptr<Module>);
+    void AddModule(Module*);
 };
 
 #endif //ENTITY_HPP

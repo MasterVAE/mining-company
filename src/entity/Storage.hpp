@@ -11,6 +11,11 @@ class Storage : Module
     std::vector<std::pair<std::string, size_t>> storage_;
 
 public:
+    Storage(Entity* my_entity) : Module(my_entity, MDL_Storage)
+    {
+
+    }
+
     const std::vector<std::pair<std::string, size_t>> GetStorage() const
     {
         return storage_;

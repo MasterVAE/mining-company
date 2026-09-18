@@ -14,6 +14,10 @@ class Factory : Module
     Storage* my_storage;
 
 public:
+    Factory(Entity* my_entity) : Module(my_entity, MDL_Factory)
+    {
+
+    }
     void Start() override
     {
         my_storage = (Storage*)my_entity_->GetModule(MDL_Storage);

@@ -7,7 +7,7 @@
 
 class World
 {
-    std::vector<Entity> entities_;
+    std::vector<Entity*> entities_;
 
 public:
     World();
@@ -16,9 +16,9 @@ public:
     void Start();
     void Update();
 
-    std::vector<Entity>& GetEntities();
+    std::vector<Entity*>& GetEntities();
 
-    Entity& Spawn(Entity& entity);
+    Entity* Spawn(Entity* entity);
 };
 
 #endif // WORLD_HPP

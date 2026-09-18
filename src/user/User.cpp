@@ -5,6 +5,7 @@
 #include "world/World.hpp"
 #include "user/User.hpp"
 #include "entity/Asteroid.hpp"
+#include "entity/Factory.hpp"
 
 void UserStart(World* world)
 {
@@ -50,18 +51,30 @@ void UserStart(World* world)
 
         std::string name = std::string(prefixes[t]) + "_" + std::to_string(counters[t]++);
 
-        Entity e(types[t], name.c_str(), x, y, t < 3);
-        Entity& spawned_e = world->Spawn(e);
+
+        Entity* e = new Entity(types[t], name.c_str(), x, y, t < 3);
+        world->Spawn(e);
 
         switch (types[t])
         {
             case ENT_Asteroid:
             {
-                Asteroid aster(&spawned_e);
-                e.AddModule((Module&)aster);
+                e->AddModule((Module*)(new Asteroid(e)));
+                e->AddModule((Module*)(new Storage(e)));
+
                 break;
             }
-        
+            case ENT_Storage:
+            {
+                e->AddModule((Module*)(new Storage(e)));
+                break;
+            }
+            case ENT_Factory:
+            {
+                e->AddModule((Module*)(new Storage(e)));
+                e->AddModule((Module*)(new Factory(e)));
+                break;
+            }
         default:
             break;
         }

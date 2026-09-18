@@ -15,7 +15,7 @@ class Asteroid : Module
 public:
     Asteroid(Entity* my_entity) : Module(my_entity, MDL_Asteroid)
     {
-        Module(my_entity, MDL_Asteroid);
+        
     }
 
     void Start() override
@@ -30,7 +30,6 @@ public:
 
     const std::string GetData() const override
     {
-        std::cout << "I said asteroid" << std::endl;
         return "Asteroid";
     }
 };

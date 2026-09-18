@@ -6,7 +6,7 @@
 
 #include "render/Render.hpp"
 
-static void RenderEntity(const Entity& entity);
+static void RenderEntity(const Entity* entity);
 
 static Vector2 WorldToScreen(double worldX, double worldY);
 
@@ -59,10 +59,10 @@ bool RenderWorld(World* world)
 
         for (const auto& entity : world->GetEntities())
         {
-            Vector2 pos = WorldToScreen(entity.X(), entity.Y());
+            Vector2 pos = WorldToScreen(entity->X(), entity->Y());
             bool hit = false;
 
-            switch (entity.GetType())
+            switch (entity->GetType())
             {
                 case ENT_Asteroid:
                 {
@@ -96,7 +96,7 @@ bool RenderWorld(World* world)
 
             if (hit)
             {
-                clicked = &entity;
+                clicked = entity;
                 break;
             }
         }
@@ -122,7 +122,7 @@ bool RenderWorld(World* world)
         RenderEntity(entity);
     }
 
-    DrawText(data.c_str(), 20, 20, 20, WHITE);
+    DrawText(data.c_str(), 20, 20, 50, WHITE);
 
             // // Отрезок (Линия)
             // DrawLine(50, 100, 250, 100, RED);
@@ -162,11 +162,11 @@ void RenderEnd()
     CloseWindow();
 }
 
-static void RenderEntity(const Entity& entity)
+static void RenderEntity(const Entity* entity)
 {
-    Vector2 pos = WorldToScreen(entity.X(), entity.Y());
+    Vector2 pos = WorldToScreen(entity->X(), entity->Y());
 
-    switch(entity.GetType())
+    switch(entity->GetType())
     {
         case ENT_Asteroid:
             DrawCircle((int)pos.x, (int)pos.y, 50.0f * (float)scale, GRAY);
@@ -181,7 +181,7 @@ static void RenderEntity(const Entity& entity)
             DrawCircle((int)pos.x, (int)pos.y, 10.0f * (float)scale, RED);
             break;
         case ENT_MiningShip:
-            DrawPoly(pos, 3, 10.0f, 0.0f, PURPLE);
+            DrawPoly(pos, 3, 10.0f * (float)scale, 0.0f, PURPLE);
             break;
     }
 }
