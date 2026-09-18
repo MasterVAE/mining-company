@@ -47,6 +47,12 @@ public:
 
         return false;
     }
+
+
+    const std::string GetData() const override
+    {
+        return "Storage";
+    }
 };
 
 #endif // STORAGE_HPP

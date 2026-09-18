@@ -15,7 +15,10 @@ public:
 
     void Start();
     void Update();
-    std::vector<Entity> GetEntities();
+
+    std::vector<Entity>& GetEntities();
+
+    Entity& Spawn(Entity& entity);
 };
 
 #endif // WORLD_HPP

@@ -23,6 +23,11 @@ public:
     {
         // TODO
     }
+
+    const std::string GetData() const override
+    {
+        return "Factory";
+    }
 };
 
 #endif // FACTORY_HPP

@@ -7,6 +7,8 @@ BUILD_DIR = build
 SRCS    = 	src/main.cpp \
 			src/entity/Entity.cpp	\
 			src/world/World.cpp	\
+			src/render/Render.cpp \
+			src/user/User.cpp
 
 OBJS    = $(patsubst src/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 

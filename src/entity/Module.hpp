@@ -32,6 +32,7 @@ public:
 
     virtual void Start() {};
     virtual void Update() {};
+    virtual const std::string GetData() const { return "bebra"; };
 };
 
 #endif // MODULE_HPP
